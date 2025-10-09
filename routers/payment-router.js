@@ -4,16 +4,32 @@ import {
     createPaymentIntent, 
     confirmPayment, 
     getPaymentHistory, 
+    getAvailableGateways,
     createSubscription, 
     cancelSubscription 
 } from "../controllers/payment-controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
-// Payment routes (all require authentication)
-router.post("/create-payment-intent", authMiddleware, createPaymentIntent);
-router.post("/confirm-payment", authMiddleware, confirmPayment);
-router.get("/payment-history", authMiddleware, getPaymentHistory);
-router.post("/create-subscription", authMiddleware, createSubscription);
-router.post("/cancel-subscription", authMiddleware, cancelSubscription);
+// ==================== PAYMENT ROUTES ====================
 
-export default router; 
+// Create a payment intent/order
+router.post("/payment-intent", authMiddleware, createPaymentIntent);
+
+// Confirm a payment (Stripe, PayPal, Razorpay)
+router.post("/payment-confirm", authMiddleware, confirmPayment);
+
+// Get user’s payment history
+router.get("/payment-history", authMiddleware, getPaymentHistory);
+
+// ✅ Public route — show available gateways
+router.get("/payment-gateways", getAvailableGateways);
+
+// ==================== SUBSCRIPTIONS ====================
+
+// Create a new subscription
+router.post("/payment-subscription", authMiddleware, createSubscription);
+
+// Cancel an existing subscription
+router.delete("/cancel-subscription/:id", authMiddleware, cancelSubscription);
+
+export default router;

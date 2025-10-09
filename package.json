@@ -12,7 +12,10 @@
     "multer": "^2.0.1",
     "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10",
-    "stripe": "^18.4.0"
+    "stripe": "^18.4.0",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "razorpay": "^2.9.2",
+    "crypto": "^1.0.1"
   },
   "name": "music-streaming_node",
   "version": "1.0.0",

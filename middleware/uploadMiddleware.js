@@ -12,12 +12,14 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  if (!file) return cb(null, true); // Skip if file not present
   if (
-    file.fieldname === "image" &&
+    (file.fieldname === "image" || file.fieldname === "albumImage") &&
     file.mimetype.startsWith("image/")
   ) {
     cb(null, true);
-  } else if (
+  }
+   else if (
     file.fieldname === "audio" &&
     file.mimetype.startsWith("audio/")
   ) {

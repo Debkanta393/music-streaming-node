@@ -15,7 +15,6 @@ const getFilename = (filePath) => {
 const register = async (req, res) => {
     try {
         const { name, email, password } = req.body
-        console.log(email, password, "In backend")
         if (!name || !email || !password) {
             return res.status(400).json({ message: "All fields are required" })
         }
@@ -192,7 +191,7 @@ const resetPassword = async (req, res) => {
         // Find user with valid reset token
         const user = await User.findOne({
             resetPasswordToken: token,
-            resetPasswordExpire: { $gt: Date.now() }
+            resetPasswordExpire: { $gt: Date.now() }  
         })
 
         if (!user) {
@@ -247,17 +246,14 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        console.log("Update user clicked", req.body)
         const { name, email, bio } = req.body
         const image = req.files?.image?.[0]
-        console.log(image)
         const userId = req.user._id
 
         // ✅ Extract filenames from path
         const imageFilename = getFilename(image.path);
 
         const user = await User.findById(userId)
-        console.log("Update user", user)
         if (!user) {
             return res.status(404).json({ message: "User not found" })
         }
@@ -268,7 +264,6 @@ const updateUser = async (req, res) => {
         await user.save()
         res.status(200).json({ message: "User updated successfully", data: user })
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: "Internal server error", error: error })
     }
 }

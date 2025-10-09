@@ -100,17 +100,6 @@ const updateProduct = async (req, res) => {
     try {
         const { proName, proDes, price, color, items } = req.body;
         const image = req.files?.image?.[0];
-        console.log("Inside update product")
-        console.log(proName)
-        console.log(proDes)
-        console.log(price)
-        console.log(color)
-        console.log(items)
-        console.log(req.files)
-
-        // if (!image) {
-        //     return res.status(400).json({ message: "Image is required" });
-        //   }
 
         const artistId = req.user._id; // From JWT
         const productId = req.params.id; // This is the product's _id

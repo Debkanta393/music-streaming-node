@@ -1,5 +1,5 @@
 import express from "express"
-import { createSong, getAllSongs, getSongById, getSongByName, searchSongsByTitle, updateSong, deleteSong, getAllSongOfArtistByURI } from "../controllers/song-controller.js"
+import { createSong, getAllSongs, getSongById, getSongByName, searchSongsByTitle, updateSong, deleteSong, getAllSongOfArtistByURI, updateSongCount, updateSongLike, getSongByGenre } from "../controllers/song-controller.js"
 import authMiddleware from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
 import verifyToken from "../middleware/verifyToken.js";
@@ -22,6 +22,7 @@ router.get("/allSong", getAllSongs)
 router.get("/author/:id", getAllSongOfArtistByURI)
 router.get("/songById/:id", getSongById)
 router.get("/song/:title", getSongByName)
+router.get("/song-genre/:genre", getSongByGenre)
 router.get("/songs/search/:title", searchSongsByTitle)
 router.put("/updateSong/:id",
   authMiddleware,
@@ -30,6 +31,8 @@ router.put("/updateSong/:id",
     { name: 'audio', maxCount: 1 }
   ]),
   updateSong)
+router.put("/update-listen-number/:id", updateSongCount)
+router.put("/update-like/:id", authMiddleware, updateSongLike)
 router.delete("/deleteSong/:id", authMiddleware, deleteSong)
 
 export default router

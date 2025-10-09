@@ -4,7 +4,7 @@ import { register, login, logout, forgotPassword, resetPassword, getUser, update
 import authMiddleware from "../middleware/authMiddleware.js";
 import multer from "multer";
 import path from "path"
-import protectMiddleware from "../middleware/protectMiddleware.js"
+import { protect } from "../middleware/protectMiddleware.js"
 
 // Set up multer storage
 const storage = multer.diskStorage({
@@ -30,7 +30,7 @@ router.put("/update-user", authMiddleware, upload.fields([
 ]),
     updateUser)
 
-router.get('/secure-data', protectMiddleware, (req, res) => {
+router.get('/secure-data', protect, (req, res) => {
     res.json({ message: 'This is secure data', user: req.user });
 });
 

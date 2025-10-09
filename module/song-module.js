@@ -1,52 +1,57 @@
 import mongoose from "mongoose";
 import userSchema from "./auth-module.js";
 
-const songSchema=new mongoose.Schema({
-    title:{
+const songSchema = new mongoose.Schema({
+    title: {
         type: String,
         required: true,
         trim: true,
         minlength: [3, "Title must be at least 3 characters long"]
     },
-    genre:{
+    genre: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
     },
-    image:{
-        type: String,
-        required: true,
-        default: null
-    },
-    audio:{
+    image: {
         type: String,
         required: true,
         default: null
     },
-    duration:{
+    audio: {
+        type: String,
+        required: true,
+        default: null
+    },
+    duration: {
         type: Number,
         required: true,
         default: 0
     },
-    description:{
+    description: {
         type: String
     },
-    isLiked:{
+    like: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+    }],
+    listenNumber: {
         type: String,
-        enum: ["true", "false"],
-        default: false
+        default: 0
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         default: Date.now
     },
-    updatedAt:{
+    updatedAt: {
         type: Date,
         default: Date.now
     }
 })
 
-const artistSchema=new mongoose.Schema({
+const artistSchema = new mongoose.Schema({
     artist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -55,6 +60,6 @@ const artistSchema=new mongoose.Schema({
     songs: [songSchema]
 })
 
-const Artist=mongoose.model("Artist", artistSchema)
+const Artist = mongoose.model("Artist", artistSchema)
 
 export default Artist
