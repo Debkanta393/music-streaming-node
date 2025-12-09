@@ -23,7 +23,7 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 // Split comma-separated origins from .env
-const allowedOrigins = [process.env.FRONTEND_URL, process.env.APP_URL];
+const allowedOrigins = [process.env.FRONTEND_URL];
 
 // CORS middleware should be before routes and static files
 app.use(
